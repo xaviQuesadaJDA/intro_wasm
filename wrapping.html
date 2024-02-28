@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wrapping.html</title>
+    <script src="wrapping.js"></script>
+    <script>
+        function run_wasm() {
+            var suma = Module.cwrap("suma", "number", ["number","number"]);
+
+            var result = Module.ccall(
+                "main",
+                "number",
+                null,
+                null
+            );
+            console.log(result);
+
+            var a = document.querySelector("#a").value;
+            var b = document.querySelector("#b").value;
+
+            var result = Module.ccall(
+                "suma",
+                "number",
+                ["number","number"],
+                [a, b]
+            );
+            console.log(result);
+
+            console.log(suma(a,b));
+        }
+    </script>
+</head>
+<body>
+    <input type="number" id="a">
+    <input type="number" id="b">    
+    <button onclick="run_wasm()">Run Wasm</button>
+</body>
+</html>
